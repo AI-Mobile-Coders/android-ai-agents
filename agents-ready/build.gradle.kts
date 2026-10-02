@@ -33,7 +33,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":agents-core"))
+    // api, not implementation: ready-made agents extend core's Agent, so apps
+    // depending on :agents-ready need :agents-core types on their compile classpath.
+    api(project(":agents-core"))
     implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)
