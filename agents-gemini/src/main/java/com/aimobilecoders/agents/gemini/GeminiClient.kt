@@ -1,6 +1,7 @@
-package com.aimobilecoders.agents.core
+package com.aimobilecoders.agents.gemini
 
 import android.util.Log
+import com.aimobilecoders.agents.core.LlmClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,7 +20,7 @@ import java.io.IOException
  *
  * Dev mode: pass a raw Gemini API key. This works from the device, but is NOT safe
  * for a published app because the key can be extracted from the APK. For production,
- * route requests through your own backend or Firebase AI Logic instead.
+ * route requests through your own backend or Firebase AI Logic (:agents-firebase).
  */
 class GeminiClient(
     private val apiKey: String,

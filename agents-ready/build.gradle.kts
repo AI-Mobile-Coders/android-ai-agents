@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation(project(":agents-core"))
+    implementation(project(":agents-gemini"))
     implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)
