@@ -5,9 +5,7 @@ plugins {
 android {
     namespace = "com.aimobilecoders.agents.ready"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version = release(37)
     }
 
     defaultConfig {
