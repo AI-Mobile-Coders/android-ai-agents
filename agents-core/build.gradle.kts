@@ -5,6 +5,9 @@ plugins {
 android {
     namespace = "com.aimobilecoders.agents.core"
     compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
         version = release(37)
     }
 
@@ -31,6 +34,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.okhttp)
     implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)

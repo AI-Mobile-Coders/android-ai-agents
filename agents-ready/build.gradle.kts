@@ -5,6 +5,9 @@ plugins {
 android {
     namespace = "com.aimobilecoders.agents.ready"
     compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
         version = release(37)
     }
 
@@ -31,6 +34,9 @@ android {
 }
 
 dependencies {
+    // api, not implementation: ready-made agents extend core's Agent, so apps
+    // depending on :agents-ready need :agents-core types on their compile classpath.
+    api(project(":agents-core"))
     implementation(project(":agents-core"))
     implementation(project(":agents-gemini"))
     implementation(libs.kotlinx.coroutines.android)

@@ -2,6 +2,7 @@ package com.aimobilecoders.agents.ready
 
 import com.aimobilecoders.agents.core.Agent
 import com.aimobilecoders.agents.core.AgentConfig
+import com.aimobilecoders.agents.core.GeminiClient
 import com.aimobilecoders.agents.gemini.GeminiClient
 
 /**
@@ -18,6 +19,11 @@ class ChatAgent(
     systemInstruction: String = DEFAULT_INSTRUCTION,
 ) : Agent(
     client = GeminiClient(apiKey = apiKey, model = model),
+    config = AgentConfig(
+        name = "chat",
+        systemInstruction = systemInstruction,
+        model = model,
+    ),
     config = AgentConfig(name = "chat", systemInstruction = systemInstruction),
 ) {
     companion object {
