@@ -8,6 +8,7 @@ android {
         version = release(36) {
             minorApiLevel = 1
         }
+        version = release(37)
     }
 
     defaultConfig {
@@ -36,6 +37,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.okhttp)
+    implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
  * Base agent. Wraps an [LlmClient] and applies the agent's [config]
  * (system instruction, model) to every request.
  *
+ * Base agent. Wraps an [LlmClient] and applies the agent's [config] to every call.
  * Build one with the [agent] DSL, or subclass it to create a ready-made agent.
  */
 open class Agent(
@@ -45,5 +46,23 @@ class AgentBuilder {
 fun agent(apiKey: String, configure: AgentBuilder.() -> Unit = {}): Agent {
     val config = AgentBuilder().apply(configure).build()
     val client = GeminiClient(apiKey = apiKey, model = config.model)
+    var systemInstruction: String? = null
+
+    internal fun build(): AgentConfig = AgentConfig(name, systemInstruction)
+}
+
+/**
+ * Create an agent from any [LlmClient]:
+ *
+ * ```
+ * val a = agent(GeminiClient(apiKey)) {
+ *     systemInstruction = "You are concise."
+ * }
+ * ```
+ *
+ * Providers add thin wrappers over this (e.g. `geminiAgent(apiKey)` in :agents-gemini).
+ */
+fun agent(client: LlmClient, configure: AgentBuilder.() -> Unit = {}): Agent {
+    val config = AgentBuilder().apply(configure).build()
     return Agent(client, config)
 }

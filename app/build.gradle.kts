@@ -9,6 +9,7 @@ android {
         version = release(36) {
             minorApiLevel = 1
         }
+        version = release(37)
     }
 
     defaultConfig {
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":agents-ready"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
