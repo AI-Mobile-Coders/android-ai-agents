@@ -140,7 +140,7 @@ fun AgentScreen(agent: Agent) {
 | `:agents-firebase` | Production key mode via Firebase AI Logic | `FirebaseLlmClient : LlmClient` | core | v0.5 |
 | `:agents-adk` | ADK-backed tools, multi-agent, on-device | `AdkAgent`, `AdkToolBridge` | core | v0.5 |
 | `:agents-tools` | Define functions agents can call | `Tool`, `ToolRegistry`, `@AgentTool` | core | v0.2 |
-| `:agents-multiagent` | Route and chain agents | `RouterAgent`, `SequentialPipeline`, `ParallelPipeline` | core | v0.4 |
+| `:agents-multiagent` | Route and chain agents | `AgentPipeline`, `ParallelAgentGroup`, `RouterAgent`, `multiAgent` | core | v0.4 |
 | `:agents-comm` | Let agents talk without direct references | `InProcessAgentBus`, `AgentRegistry` (impl of core's `AgentBus`) | core | v0.4 |
 | `:agents-rag` | Retrieval over your documents | `VectorStore`, `Embedder`, `RagAgent` | core | v0.4 |
 | `:agents-voice` | Speech in and out | `SpeechToText`, `TextToSpeech`, `VoiceAgent` | core | v1.0 |
