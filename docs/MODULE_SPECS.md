@@ -237,39 +237,43 @@ fun getWeather(@Param("city") city: String): String
 
 ## `:agents-multiagent`
 
-**Status:** to build · **Squad:** Core · **Depends on:** `:agents-core` · **Phase:** v0.4
+**Status:** shipped · **Squad:** Core · **Depends on:** `:agents-core` · **Phase:** v0.4
 
 **Purpose:** ready orchestration patterns so multi-agent apps don't start from scratch — a router that delegates, and pipelines that chain or fan out agents.
 
 A single agent handles one job well, but real tasks often need a few of them working together, and this module provides those coordination patterns so nobody has to build them by hand. You can set up a router that reads the user's request and forwards it to whichever agent fits best, chain agents so each one's output feeds the next, or send a request to several at once and combine what comes back. The patterns are written against the core agent interface, so the agents being coordinated stay completely independent of each other.
 
-**Features to build:**
+**Features shipped:**
 
-- [ ] `RouterAgent` — classify the query (via an LLM) and delegate to the right sub-agent
-- [ ] `SequentialPipeline` — feed each agent's output into the next
-- [ ] `ParallelPipeline` — run agents concurrently, then merge results
-- [ ] Works through core's `AgentBus` so sub-agents stay decoupled
-- [ ] A reducer/merge strategy hook for parallel results
+- [x] `RouterAgent` — classify query intent and delegate to specialized sub-agents or `AgentRegistry`
+- [x] `AgentPipeline` — feed each agent's output into the next in sequence
+- [x] `ParallelAgentGroup` — run agents concurrently in parallel, with flexible result merging / synthesis
+- [x] `multiAgent` — top-level unified DSL builder wrapper
+- [x] Integrates with core `AgentBus` and `AgentRegistry` for decoupled routing
 
-**Target public API:**
+**Public API:**
 
 ```kotlin
-class RouterAgent(
-    routes: Map<String, Agent>,
-    classifier: Agent,
-) { suspend fun handle(query: String): String }
+open class AgentPipeline(val agents: List<Agent>, config: AgentConfig) : Agent(...)
+fun agentPipeline(configure: AgentPipelineBuilder.() -> Unit): AgentPipeline
 
-class SequentialPipeline(stages: List<Agent>) { suspend fun run(input: String): String }
-class ParallelPipeline(agents: List<Agent>, merge: (List<String>) -> String) { suspend fun run(input: String): String }
+open class ParallelAgentGroup(val agents: List<Agent>, val aggregator: AgentAggregator, config: AgentConfig) : Agent(...)
+fun parallelAgentGroup(configure: ParallelAgentGroupBuilder.() -> Unit): ParallelAgentGroup
+
+open class RouterAgent(val routes: Map<String, Agent>, val resolver: AgentResolver, val fallbackAgent: Agent?, config: AgentConfig) : Agent(...)
+fun routerAgent(configure: RouterAgentBuilder.() -> Unit): RouterAgent
+
+fun multiAgent(configure: MultiAgentBuilder.() -> Unit): Agent
 ```
 
-**Tasks:**
+**Tasks completed:**
 
-1. Implement `SequentialPipeline` (simplest) + tests with `FakeLlmClient`.
-2. Implement `ParallelPipeline` with coroutines + a default merge.
-3. Implement `RouterAgent` with an LLM classifier and a fallback route.
+1. [x] Implement `AgentPipeline` + tests with fake `LlmClient`.
+2. [x] Implement `ParallelAgentGroup` with coroutines + default and custom synthesis aggregators.
+3. [x] Implement `RouterAgent` with route resolution and fallback agent.
+4. [x] Implement `multiAgent` DSL wrapper and comprehensive test suite.
 
-**Definition of Done:** a two-agent router demo works in `:app`; pipelines tested deterministically with fakes; no direct dependency on any sibling agent module.
+**Definition of Done:** All multi-agent primitives tested deterministically with fakes and shipped in `:agents-multiagent`.
 
 ## `:agents-comm`
 
