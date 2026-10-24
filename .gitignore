@@ -16,3 +16,17 @@ local.properties
 
 # IDE
 .idea/
+
+# Kotlin compiler / daemon session data
+.kotlin/
+
+# Secrets - never commit keys, signing configs, or env files
+*.jks
+*.keystore
+keystore.properties
+secrets.properties
+.env
+.env.*
+
+# AI tools: share rules/skills, keep personal settings local
+.claude/settings.local.json
